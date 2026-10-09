@@ -412,8 +412,8 @@ namespace AC_SpectatorMode
         }
 
         /// <summary>
-        /// The right-button drags, the same as while watching: up and down lifts or sinks the
-        /// camera, left and right moves it back and forward along its view.
+        /// The right-button drags: up and down lifts or sinks the camera. Left and right is left
+        /// to AC_MainCameraExtension, which zooms the lens with it as in first person.
         /// With the left button as well: forward and back moves the camera along its view, left
         /// and right slides it sideways. A short press without dragging is a tap instead.
         /// </summary>
@@ -432,11 +432,6 @@ namespace AC_SpectatorMode
             }
 
             _flyNudgeLeft += Vector3.up * (up * pan);
-
-            // Left and right is "nearer and further" while watching. The free camera has nothing
-            // to be near to, so it moves along its own view instead: right is back, left is forward.
-            if (across != 0f)
-                _flyNudgeLeft -= explore._camera.transform.forward * (across * pan);
         }
 
         /// <summary>

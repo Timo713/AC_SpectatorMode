@@ -47,6 +47,10 @@ Every key can be changed, and has an optional second key, in the settings
 
 - Fly with W A S D, the arrow keys or the left mouse button, in the direction
   you look. E rises, Q sinks. Shift is faster, Ctrl slower.
+- Hold the right button and drag up or down to rise or sink. With the left
+  button as well, the camera moves along its view and sideways.
+- With AC_MainCameraExtension: the wheel, or a right-drag left / right, zooms
+  the lens.
 - Right click a character to watch them, or a door to go through it.
 - End puts your own character where the camera is.
 - Asking to watch someone where there is nobody also starts it.
