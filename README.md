@@ -38,6 +38,7 @@ Every key can be changed, and has an optional second key, in the settings
 - Hold both buttons and drag to slide the view sideways, or forward and back
   to move the camera nearer or further.
 - A quick right click lets go of them and flies from where the camera is.
+- Space (the game's first-person key) also puts the view back to normal.
 - With the game's mouse pointer out (middle click), drag with the left button
   to turn the camera. If the Clothing State Menu plugin is installed, it opens
   for the watched character.
@@ -60,6 +61,7 @@ them.
 
 - Entering a room by camera just as the game starts a scene there: your
   character stays hidden for the scene and fades in a moment after it ends.
+- The mouse pointer can blink for a frame now and then while the right button is held.
 
 ## Settings
 

@@ -37,6 +37,11 @@ namespace AC_SpectatorMode
         private Vector3 _shift;
         // Where the drags have asked it to be; _shift glides there.
         private Vector3 _shiftWanted;
+        // To notice the game's own first-person key while watching: the camera's mode last
+        // frame, and when the wheel or the right button (which also change it) were last used.
+        private bool _modeKnown;
+        private TrackingCamera.States _viewModeWas;
+        private float _zoomInputAt = -10f;
         // To tell a tap of the right button from a drag, in the game's mouse mode.
         private float _rightAt;
         // When the camera last switched between watching and flying, so one click cannot do both.
@@ -328,7 +333,9 @@ namespace AC_SpectatorMode
             if (rightDrag)
             {
                 if (_flying) FlyDrag(explore, tracking);
-                else Drag(explore, tracking, Input.GetMouseButton(0));
+                // In first person the left button is not part of the drag, as on the player's
+                // own camera.
+                else Drag(explore, tracking, Input.GetMouseButton(0) && tracking.State != TrackingCamera.States.FPS);
             }
             else if ((watching || _flying) && mouseMode && Input.GetMouseButton(0))
             {
@@ -336,6 +343,29 @@ namespace AC_SpectatorMode
             }
 
             if (watching) EaseZoom(tracking);
+
+            // The game's own first-person key (Space) also puts the view back, in either
+            // direction. The wheel and the right-button drag change the cameraMode too
+            // (AC_MainCameraExtension), and those must not reset anything.
+            if (Input.mouseScrollDelta.y != 0f || Input.GetMouseButton(1)) _zoomInputAt = Time.unscaledTime;
+            TrackingCamera.States cameraMode = tracking.State;
+            bool viewMode = cameraMode == TrackingCamera.States.TPS || cameraMode == TrackingCamera.States.FPS;
+            if (watching && _modeKnown && viewMode && cameraMode != _viewModeWas && Time.unscaledTime - _zoomInputAt > 0.15f)
+            {
+                _shiftWanted = Vector3.zero;
+                _distEasing = false;
+                AC.PropertyData.ExploreProperties properties = tracking._propertyData;
+                float distance = properties != null ? properties._camera.DefaultDistance : 0f;
+                if (distance > 0.01f)
+                {
+                    TrackingCamera.AngleParameter orbit = tracking._parameter;
+                    orbit.Distance = distance;
+                    tracking._parameter = orbit;
+                }
+                Plugin.Debug("[spectate] the game's first-person key: view reset");
+            }
+            _modeKnown = watching && viewMode;
+            _viewModeWas = cameraMode;
 
             if (watching && (free || mouseMode) && Pressed(Plugin.ResetKey, Plugin.ResetKey2))
             {
