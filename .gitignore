@@ -1,0 +1,22 @@
+# Build output
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Release zips are built locally and attached to GitHub releases.
+release/
+
+# Kept on the developer's PC only, never published: replaced DLLs, screenshots, drafts.
+Backups/
+caps/
+
+# Working notes: kept private.
+CLAUDE.md
+FINDINGS.md
+
+# Each person's own game folder.
+Local.props

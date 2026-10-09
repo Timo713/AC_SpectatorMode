@@ -1,0 +1,7 @@
+<!-- Local build settings. Not tracked by git: each person points this at
+     their own game install. -->
+<Project>
+	<PropertyGroup>
+		<InteropPath>C:\Games\Aicomi\BepInEx\interop-Aicomi\interop</InteropPath>
+	</PropertyGroup>
+</Project>
